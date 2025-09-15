@@ -4,14 +4,12 @@ require_once 'vendor/autoload.php';
 
 // Bootstrap Laravel
 $app = require_once 'bootstrap/app.php';
-$app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
-
-use Illuminate\Support\Facades\DB;
+$app->make('Illuminate\\Contracts\\Console\\Kernel')->bootstrap();
 
 echo "=== FIXING FEATURED LINKS ===\n\n";
 
 // Get the base URL for your local site
-$baseUrl = 'http://localhost/Ecommerce';
+$baseUrl = 'http://localhost/ecommerce-php/project/public';
 
 // Mapping of featured link names to local category slugs
 $linkMappings = [
@@ -31,7 +29,7 @@ $linkMappings = [
 foreach ($linkMappings as $name => $slug) {
     $newUrl = $baseUrl . '/category/' . $slug;
     
-    $updated = DB::table('featured_links')
+    $updated = \Illuminate\Support\Facades\DB::table('featured_links')
         ->where('name', $name)
         ->update(['link' => $newUrl]);
     
@@ -45,7 +43,7 @@ foreach ($linkMappings as $name => $slug) {
 echo "\n=== VERIFICATION ===\n";
 
 // Verify the updates
-$links = DB::table('featured_links')->get();
+$links = \Illuminate\Support\Facades\DB::table('featured_links')->get();
 foreach ($links as $link) {
     echo "Name: " . $link->name . "\n";
     echo "URL: " . $link->link . "\n";

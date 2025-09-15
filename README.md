@@ -1,61 +1,64 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="320" alt="Laravel"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+### Single Ecommerce (Laravel)
 
-## About Laravel
+A simple multi-section ecommerce web app built on Laravel. It includes a customer storefront, product catalog with categories, cart/checkout, and an admin panel for managing products, orders, banners, featured links, etc.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Tech stack
+- Laravel (PHP 8)
+- Blade views, jQuery/Bootstrap front-end
+- MySQL (or MariaDB)
+- Apache (XAMPP) recommended for local dev
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Quick start (local)
+1) Requirements
+- PHP 8.x, Composer
+- MySQL/MariaDB
+- Apache with `mod_rewrite` enabled and `AllowOverride All`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2) Install
+- Place the project at `C:/xampp/htdocs/ecommerce-php`
+- From `project/` run:
+```
+composer install
+cp .env.example .env   # on Windows, copy the file manually
+php artisan key:generate
+```
+- Create a database and set DB_ values in `project/.env`
+- (Optional demo data) Run migrations/seeds:
+```
+php artisan migrate --seed
+```
 
-## Learning Laravel
+3) Serve the app
+- Point Apache to the Laravel public folder:
+  - URL for XAMPP: `http://localhost/ecommerce-php/project/public/`
+  - Recommended: create a VirtualHost with `DocumentRoot "C:/xampp/htdocs/ecommerce-php/project/public"`
+- Make sure public assets are available under `project/public/assets`.
+  - If needed, copy or junction the root `assets` folder to `project/public/assets`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4) Fix homepage Featured Links (optional, local-only)
+```
+php project/fix_featured_links.php
+```
+This points the homepage Featured Links to your local category routes.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Useful environment values
+- `APP_URL=http://localhost/ecommerce-php/project/public`
+- `ASSET_URL` can be left empty for local
 
-## Laravel Sponsors
+### Default routes
+- Storefront: `/`
+- Categories: `/category/{category?}/{subcategory?}/{childcategory?}`
+- Product page: `/item/{slug}`
+- Admin panel: `/admin`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Notes
+- If pages 404, verify `mod_rewrite` is enabled and `.htaccess` is honored (AllowOverride All).
+- Clear caches when changing env/config:
+```
+php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear
+```
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### License
+MIT (Laravel framework and included code are MIT-licensed).
