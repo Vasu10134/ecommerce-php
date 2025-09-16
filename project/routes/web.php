@@ -1708,6 +1708,11 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   Route::post('/test/post/checkout', 'Front\FrontendController@testpostcheckout')->name('test-post');
 
   // PAGE SECTION
+  // Ensure common base slugs route to the homepage instead of 404
+  Route::get('/Ecommerce', function(){ return redirect()->route('front.index'); });
+  Route::get('/ecommerce', function(){ return redirect()->route('front.index'); });
+  
+  // Generic CMS page by slug (keep last)
   Route::get('/{slug}','Front\FrontendController@page')->name('front.page');
   // PAGE SECTION ENDS
 
